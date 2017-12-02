@@ -19,15 +19,32 @@ pub fn checksum_matrix(input: &str) -> u32 /* matrix checksum */ {
     checksum
 }
 
+pub fn row_division(input: &str) -> u32 /* row div */ {
+    let digits: Vec<u32> = input.split_whitespace()
+                                .map(|s| s.parse::<u32>().unwrap())
+                                .collect();
+    for (idx, digit) in digits.iter().enumerate() {
+        for (idy, d) in digits.iter().enumerate() {
+            if idx == idy { continue }
+            if digit % d == 0 {
+                return digit / d
+            }
+        }
+    }
+    0
+}
+
+pub fn matrix_division_sum(input: &str) -> u32 /* matrix div sum */ {
+    let checksum: u32 = input.split("\n")
+                             .fold(0, |acc, row| {
+                                 acc + row_division(row)
+                             });
+    checksum
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    fn ex_input() -> &'static str {
-r#"5 1 9 5
-7 5 3
-2 4 6 8"#
-    }
 
     fn test_input() -> &'static str {
 r#"4347 3350 196  162  233  4932 4419 3485 4509 4287 4433 4033 207  3682 2193 4223
@@ -46,6 +63,16 @@ r#"4347 3350 196  162  233  4932 4419 3485 4509 4287 4433 4033 207  3682 2193 42
 134  130  2236 118  142  2350 3007 2495 2813 2833 2576 2704 169  2666 2267 850
 401  151  309  961  124  1027 1084 389  1150 166  1057 137  932  669  590  188
 784  232  363  316  336  666  711  430  192  867  628  57   222  575  622  234"#
+    }
+
+    /*
+    part 1
+    */
+
+    fn ex_input_part_1() -> &'static str {
+        r#"5 1 9 5
+7 5 3
+2 4 6 8"#
     }
 
     #[test]
@@ -70,17 +97,61 @@ r#"4347 3350 196  162  233  4932 4419 3485 4509 4287 4433 4033 207  3682 2193 42
     }
 
     #[test]
-    fn ex_matrix() {
-        let input = ex_input();
+    fn ex_matrix_part_1() {
+        let input = ex_input_part_1();
         let res = checksum_matrix(input);
         assert_eq!(res, 18);
     }
 
     #[test]
-    fn test_matrix() {
+    fn test_matrix_part_1() {
         let input = test_input();
         let res = checksum_matrix(input);
         assert_eq!(res, 47136);
     }
 
+    /*
+    part 2
+    */
+
+    fn ex_input_part_2() -> &'static str {
+        r#"5 9 2 8
+9 4 7 3
+3 8 6 5"#
+    }
+
+    #[test]
+    fn ex_row_div_1() {
+        let input = "5 9 2 8";
+        let res = row_division(input);
+        assert_eq!(res, 4);
+    }
+
+    #[test]
+    fn ex_row_div_2() {
+        let input = "9 4 7 3";
+        let res = row_division(input);
+        assert_eq!(res, 3);
+    }
+
+    #[test]
+    fn ex_row_div_3() {
+        let input = "3 8 6 5";
+        let res = row_division(input);
+        assert_eq!(res, 2);
+    }
+
+    #[test]
+    fn ex_matrix_part_2() {
+        let input = ex_input_part_2();
+        let res = matrix_division_sum(input);
+        assert_eq!(res, 9);
+    }
+
+    #[test]
+    fn test_matrix_part_2() {
+        let input = test_input();
+        let res = matrix_division_sum(input);
+        assert_eq!(res, 250);
+    }
 }
