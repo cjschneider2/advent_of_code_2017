@@ -12,7 +12,10 @@ fn is_anagram(word_1: &str, word_2: &str) -> bool {
     _2.sort_unstable();
 
     for (idx, c) in _1.iter().enumerate() {
-        if *c != _2[idx] { return false; }
+        if *c != _2[idx] {
+             return false;
+        }
+        println!("{}:{}", c, _2[idx]);
     }
 
     true
@@ -66,32 +69,36 @@ mod tests {
     #[test]
     fn ex_1_part_2() {
         let input = "abcde fghij";
-        assert_eq!(is_valid_passphrase(input, false), true);
+        println!("{}", input);
+        assert_eq!(is_valid_passphrase(input, true), true);
     }
 
     #[test]
     fn ex_2_part_2() {
         let input = "abcde xyz ecdab";
-        assert_eq!(is_valid_passphrase(input, false), false);
+        println!("{}", input);
+        assert_eq!(is_valid_passphrase(input, true), false);
     }
 
     #[test]
     fn ex_3_part_2() {
         let input = "a ab abc abd abf abj";
-        assert_eq!(is_valid_passphrase(input, false), true);
+        println!("{}", input);
+        assert_eq!(is_valid_passphrase(input, true), true);
     }
 
     #[test]
     fn ex_4_part_2() {
         let input = "iiii oiii ooii oooi oooo";
-        assert_eq!(is_valid_passphrase(input, false), true);
+        println!("{}", input);
+        assert_eq!(is_valid_passphrase(input, true), true);
     }
 
     #[test]
     fn ex_5_part_2() {
         let input = "oiii ioii iioi iiio";
-        println!("{}", pw);
-        assert_eq!(is_valid_passphrase(input, false), false);
+        println!("{}", input);
+        assert_eq!(is_valid_passphrase(input, true), false);
     }
 
     #[test]
@@ -114,7 +121,7 @@ mod tests {
         assert_eq!(valid_pw_count, 386);
     }
 
-    // #[test]
+    #[test]
     fn test_input_part_2() {
         println!("");
         let pw_set = input();
@@ -131,6 +138,6 @@ mod tests {
         }
         println!("valid: {}", valid_pw_count);
         println!("count: {}", count);
-        assert_eq!(valid_pw_count, 0);
+        assert_eq!(valid_pw_count, 208);
     }
 }
