@@ -5,4 +5,5 @@ defmodule InverseCaptchaTest do
   test "greets the world" do
     assert InverseCaptcha.hello() == :world
   end
+
 end

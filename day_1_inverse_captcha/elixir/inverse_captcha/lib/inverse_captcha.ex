@@ -20,6 +20,8 @@ defmodule InverseCaptcha do
     out = input_string
           |> String.split
           |> Enum.map(&String.to_integer/1)
+
+    do_part_1(out, )
   end
 
   def do_part_1(int_list) do
